@@ -39,8 +39,8 @@ Nesta versão, serão entregues as seguintes funcionalidades:
 
 ## 🛠️ Stack Tecnológica
 
-- **Backend:** .NET 8 (C#) — API RESTful  
-- **Frontend:** Angular 17 + Angular Material  
+- **Backend:** .NET 10 (C#) — API RESTful  
+- **Frontend:** Angular 17 + Angular Material
 - **Banco de Dados:** SQL Server  
 - **Arquitetura:** Clean Architecture + Entity Framework Core  
 - **Autenticação:** JWT (JSON Web Token)  
@@ -51,7 +51,7 @@ Nesta versão, serão entregues as seguintes funcionalidades:
 ## ⚙️ Como Executar Localmente
 
 ### Pré-requisitos
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
+- [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)  
 - [Node.js 20+](https://nodejs.org/)  
 - [Angular CLI](https://angular.io/cli)  
 - [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
