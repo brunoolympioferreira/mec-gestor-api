@@ -51,7 +51,7 @@ Nesta versão, serão entregues as seguintes funcionalidades:
 ## ⚙️ Como Executar Localmente
 
 ### Pré-requisitos
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
 - [Node.js 20+](https://nodejs.org/)  
 - [Angular CLI](https://angular.io/cli)  
 - [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
