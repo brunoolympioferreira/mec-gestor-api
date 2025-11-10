@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MecGestor.Api/MecGestor.Api.csproj" Id="e12f295b-875c-4098-8bb2-b888f1970f26" />
+  <Project Path="MecGestor.Application/MecGestor.Application.csproj" Id="31b4046c-da6a-4048-b135-121ac03ca3ae" />
+  <Project Path="MecGestor.Domain/MecGestor.Domain.csproj" Id="0abb39a0-9432-4385-96cd-7bddfb6a6836" />
+  <Project Path="MecGestor.Infra/MecGestor.Infra.csproj" Id="055f4f09-b667-400d-a053-d4cc0d4e2c85" />
+</Solution>
