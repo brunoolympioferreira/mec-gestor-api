@@ -416,3 +416,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/MecGestor/MecGestor.Api/Pipeline.txt
