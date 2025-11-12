@@ -1,3 +1,5 @@
+using MecGestor.Application;
+using MecGestor.Infra;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,8 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var connectionString = string.Empty; // Replace with actual connection string retrieval logic
+builder.Services.AddInfraModule(connectionString);
+builder.Services.AddApplicationModule();
 
 var app = builder.Build();
 

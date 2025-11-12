@@ -10,6 +10,7 @@ public class Plan : BaseEntity
         Description = description;
         Type = type;
         Amount = amount;
+        Companies = new HashSet<Company>();
     }
 
     public string Name { get; private set; }
