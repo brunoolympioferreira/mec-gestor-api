@@ -1,0 +1,10 @@
+﻿using MecGestor.Domain.Intefaces.Contracts;
+
+namespace MecGestor.Domain.Entities;
+
+public abstract class BaseEntity : IEntity
+{
+    public Guid Id { get; set; } = new Guid();
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; }
+}
