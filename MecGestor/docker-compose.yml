@@ -1,0 +1,6 @@
+services:
+  mecgestor.api:
+    image: ${DOCKER_REGISTRY-}mecgestorapi
+    build:
+      context: .
+      dockerfile: MecGestor.Api/Dockerfile
