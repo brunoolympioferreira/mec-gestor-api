@@ -13,6 +13,11 @@ public class Plan : BaseEntity
         Companies = new HashSet<Company>();
     }
 
+    /// <summary>
+    /// EF Core Constructor
+    /// </summary>
+    protected Plan() {}
+
     public string Name { get; private set; }
     public string Description { get; private set; }
     public PlanTypeEnum Type { get; private set; }

@@ -14,6 +14,11 @@ public class Company : BaseEntity
         PlanId = planId;
     }
 
+    /// <summary>
+    /// Ef Core constructor
+    /// </summary>
+    protected Company() { }
+
     public string Name { get; private set; }
     public Document Document { get; private set; }
     public Email Email { get; private set; }

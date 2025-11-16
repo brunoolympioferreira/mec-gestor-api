@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var connectionString = string.Empty; // Replace with actual connection string retrieval logic
-builder.Services.AddInfraModule(connectionString);
+builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddApplicationModule();
 
 var app = builder.Build();

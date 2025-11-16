@@ -4,3 +4,11 @@ services:
     build:
       context: .
       dockerfile: MecGestor.Api/Dockerfile
+    depends_on:
+      - sqlserver
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
