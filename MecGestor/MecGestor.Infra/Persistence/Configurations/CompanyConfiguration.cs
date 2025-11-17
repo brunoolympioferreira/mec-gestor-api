@@ -1,4 +1,5 @@
 ﻿using MecGestor.Domain.Entities;
+using MecGestor.Domain.Enums;
 using MecGestor.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -51,15 +52,12 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .IsRequired()
             .HasDefaultValue(true);
 
-        builder.Property(c => c.PlanId)
-            .IsRequired();
-
-        builder.HasOne(c => c.Plan)
-            .WithMany(p => p.Companies)
-            .HasForeignKey(c => c.PlanId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasIndex(c => c.PlanId);
+        builder.Property(c => c.Plan)
+            .IsRequired()
+            .HasMaxLength(20)
+            .HasConversion(
+                v => v.ToString(),
+                v => Enum.Parse<PlanEnum>(v));
 
         builder.OwnsOne(c => c.Document, document =>
         {

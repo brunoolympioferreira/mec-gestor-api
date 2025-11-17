@@ -46,62 +46,21 @@ namespace MecGestor.Infra.Persistence.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Plan")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
 
                     b.ToTable("Companies", (string)null);
                 });
 
-            modelBuilder.Entity("MecGestor.Domain.Entities.Plan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Plans", (string)null);
-                });
-
             modelBuilder.Entity("MecGestor.Domain.Entities.Company", b =>
                 {
-                    b.HasOne("MecGestor.Domain.Entities.Plan", "Plan")
-                        .WithMany("Companies")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.OwnsOne("MecGestor.Domain.ValueObjects.Document", "Document", b1 =>
                         {
                             b1.Property<Guid>("CompanyId")
@@ -125,7 +84,7 @@ namespace MecGestor.Infra.Persistence.Migrations
                                 .IsUnique()
                                 .HasDatabaseName("IX_Companies_Document");
 
-                            b1.ToTable("Companies", (string)null);
+                            b1.ToTable("Companies");
 
                             b1.WithOwner()
                                 .HasForeignKey("CompanyId");
@@ -144,7 +103,7 @@ namespace MecGestor.Infra.Persistence.Migrations
 
                             b1.HasKey("CompanyId");
 
-                            b1.ToTable("Companies", (string)null);
+                            b1.ToTable("Companies");
 
                             b1.WithOwner()
                                 .HasForeignKey("CompanyId");
@@ -155,13 +114,6 @@ namespace MecGestor.Infra.Persistence.Migrations
 
                     b.Navigation("Email")
                         .IsRequired();
-
-                    b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("MecGestor.Domain.Entities.Plan", b =>
-                {
-                    b.Navigation("Companies");
                 });
 #pragma warning restore 612, 618
         }
