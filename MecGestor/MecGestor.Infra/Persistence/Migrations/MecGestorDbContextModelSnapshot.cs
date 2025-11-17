@@ -125,7 +125,7 @@ namespace MecGestor.Infra.Persistence.Migrations
                                 .IsUnique()
                                 .HasDatabaseName("IX_Companies_Document");
 
-                            b1.ToTable("Companies");
+                            b1.ToTable("Companies", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CompanyId");
@@ -144,7 +144,7 @@ namespace MecGestor.Infra.Persistence.Migrations
 
                             b1.HasKey("CompanyId");
 
-                            b1.ToTable("Companies");
+                            b1.ToTable("Companies", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CompanyId");

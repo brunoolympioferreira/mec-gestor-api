@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MecGestor.Domain\MecGestor.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Extensions\" />
+  </ItemGroup>
+
 </Project>
