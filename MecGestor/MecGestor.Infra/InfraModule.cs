@@ -1,4 +1,6 @@
-﻿using MecGestor.Infra.Persistence;
+﻿using MecGestor.Domain.Intefaces.Contracts;
+using MecGestor.Domain.Intefaces.Repositories;
+using MecGestor.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +12,10 @@ public static class InfraModule
     public static void AddInfraModule(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DatabaseConnection") ?? throw new ArgumentNullException("ConnectionString Requerida");
-        services.AddDatabase(connectionString);
+        services
+            .AddDatabase(connectionString)
+            .AddUnityOfWork()
+            .AddRepositories();
     }
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
@@ -22,13 +27,15 @@ public static class InfraModule
         return services;
     }
 
-    private static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        return services;
-    }
-
     private static IServiceCollection AddUnityOfWork(this IServiceCollection services)
     {
+        return services.AddScoped<IUnityOfWork, UnityOfWork>();
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICompanyRepositroy, ICompanyRepositroy>();
+
         return services;
     }
 }
