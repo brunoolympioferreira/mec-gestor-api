@@ -1,6 +1,7 @@
 ﻿using MecGestor.Domain.Intefaces.Contracts;
 using MecGestor.Domain.Intefaces.Repositories;
 using MecGestor.Infra.Persistence;
+using MecGestor.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ public static class InfraModule
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<ICompanyRepositroy, ICompanyRepositroy>();
+        services.AddScoped<ICompanyRepositroy, CompanyRepository>();
 
         return services;
     }

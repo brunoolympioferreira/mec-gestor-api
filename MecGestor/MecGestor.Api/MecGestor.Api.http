@@ -1,4 +1,4 @@
-@MecGestor.Api_HostAddress = http://localhost:5298
+@MecGestor.Api_HostAddress = http://localhost:5001
 
 GET {{MecGestor.Api_HostAddress}}/weatherforecast/
 Accept: application/json
