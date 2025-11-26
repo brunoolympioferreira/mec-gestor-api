@@ -1,15 +1,24 @@
+using FluentValidation;
+using MecGestor.Api.Filters;
 using MecGestor.Application;
+using MecGestor.Application.Common.Requests;
+using MecGestor.Application.Validations.Company;
 using MecGestor.Infra;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddValidatorsFromAssemblyContaining<CreateCompanyRequestValidator>();
+builder.Services.AddScoped<ValidationFilter>();
+
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.AddService<ValidationFilter>();
+});
 builder.Services.AddOpenApi();
 
-var connectionString = string.Empty; // Replace with actual connection string retrieval logic
 builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddApplicationModule();
 

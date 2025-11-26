@@ -10,7 +10,7 @@ namespace MecGestor.Api.Controllers;
 public class CompaniesController(ICompanyService companyService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CompanyRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCompanyRequest request, CancellationToken cancellationToken)
     {
         var companyId = await companyService.CreateAsync(request, cancellationToken);
 

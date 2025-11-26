@@ -4,5 +4,5 @@ namespace MecGestor.Application.Services.Interfaces;
 
 public interface ICompanyService
 {
-    Task<Guid> CreateAsync(CompanyRequest request, CancellationToken cancellationToken = default);
+    Task<Guid> CreateAsync(CreateCompanyRequest request, CancellationToken cancellationToken = default);
 }

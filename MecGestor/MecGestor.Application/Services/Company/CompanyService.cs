@@ -6,7 +6,7 @@ namespace MecGestor.Application.Services.Company;
 
 public class CompanyService(IUnityOfWork unityOfWork) : ICompanyService
 {
-    public async Task<Guid> CreateAsync(CompanyRequest request, CancellationToken cancellationToken = default)
+    public async Task<Guid> CreateAsync(CreateCompanyRequest request, CancellationToken cancellationToken = default)
     {
         var company = request.ToEntity();
 
