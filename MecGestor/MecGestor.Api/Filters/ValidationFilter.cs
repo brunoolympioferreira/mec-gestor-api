@@ -10,29 +10,31 @@ public class ValidationFilter(IServiceProvider serviceProvider) : IAsyncActionFi
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        foreach (var argument in context.ActionArguments.Values.Where(v => v != null))
+        // Percorre todos os argumentos da action
+        foreach (var argument in context.ActionArguments.Values)
         {
-            var validatorType = typeof(IValidator<>).MakeGenericType(argument.GetType());
+            if (argument == null) continue;
 
-            if (_serviceProvider.GetService(validatorType) is IValidator validator)
+            var argumentType = argument.GetType();
+
+            // Tenta obter o validator para este tipo
+            var validatorType = typeof(IValidator<>).MakeGenericType(argumentType);
+            var validator = _serviceProvider.GetService(validatorType) as IValidator;
+
+            if (validator != null)
             {
+                // Cria o contexto de validação
                 var validationContext = new ValidationContext<object>(argument);
+
+                // Executa a validação
                 var validationResult = await validator.ValidateAsync(validationContext);
 
+                // Se houver erros, lança ValidationException que será capturada pelo middleware
                 if (!validationResult.IsValid)
                 {
-                    foreach (var error in validationResult.Errors)
-                    {
-                        context.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                    }
+                    throw new ValidationException(validationResult.Errors);
                 }
             }
-        }
-
-        if (!context.ModelState.IsValid)
-        {
-            context.Result = new BadRequestObjectResult(context.ModelState);
-            return;
         }
 
         await next();

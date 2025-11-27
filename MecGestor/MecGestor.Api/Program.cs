@@ -1,22 +1,31 @@
 using FluentValidation;
 using MecGestor.Api.Filters;
+using MecGestor.Api.Middlewares;
 using MecGestor.Application;
-using MecGestor.Application.Common.Requests;
 using MecGestor.Application.Validations.Company;
 using MecGestor.Infra;
+using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCompanyRequestValidator>();
-builder.Services.AddScoped<ValidationFilter>();
 
-// Add services to the container.
+builder.Services.AddScoped<ValidationFilter>();
 
 builder.Services.AddControllers(options =>
 {
     options.Filters.AddService<ValidationFilter>();
 });
+
+// Customiza o comportamento de Model State para não retornar automaticamente BadRequest
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    // Desabilita a resposta automática de validação do ASP.NET Core
+    // para que o middleware possa capturar ValidationException
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfraModule(builder.Configuration);
@@ -35,6 +44,7 @@ if (app.Environment.IsDevelopment())
         options.DarkMode = true;
     });
 }
+app.UseGlobalExceptionHandler();
 
 app.UseHttpsRedirection();
 
