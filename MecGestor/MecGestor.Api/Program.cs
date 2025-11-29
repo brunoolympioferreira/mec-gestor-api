@@ -6,50 +6,65 @@ using MecGestor.Application.Validations.Company;
 using MecGestor.Infra;
 using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddValidatorsFromAssemblyContaining<CreateCompanyRequestValidator>();
-
-builder.Services.AddScoped<ValidationFilter>();
-
-builder.Services.AddControllers(options =>
+try
 {
-    options.Filters.AddService<ValidationFilter>();
-});
+    Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build())
+        .CreateLogger();
 
-// Customiza o comportamento de Model State para não retornar automaticamente BadRequest
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    // Desabilita a resposta automática de validação do ASP.NET Core
-    // para que o middleware possa capturar ValidationException
-    options.SuppressModelStateInvalidFilter = true;
-});
+    Log.Information("Iniciando MecGestor API");
 
-builder.Services.AddOpenApi();
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfraModule(builder.Configuration);
-builder.Services.AddApplicationModule();
+    builder.Host.UseSerilog();
 
-var app = builder.Build();
+    builder.Services.AddValidatorsFromAssemblyContaining<CreateCompanyRequestValidator>();
+    builder.Services.AddScoped<ValidationFilter>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-
-    app.MapScalarApiReference(options =>
+    builder.Services.AddControllers(options =>
     {
-        options.Title = "MecGestor API";
-        options.DarkMode = true;
+        options.Filters.AddService<ValidationFilter>();
     });
+
+    builder.Services.Configure<ApiBehaviorOptions>(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
+
+    builder.Services.AddOpenApi();
+    builder.Services.AddInfraModule(builder.Configuration);
+    builder.Services.AddApplicationModule();
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.MapOpenApi();
+
+        app.MapScalarApiReference(options =>
+        {
+            options.Title = "MecGestor API";
+            options.DarkMode = true;
+        });
+    }
+
+    app.UseGlobalExceptionHandler();
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+
+    app.Run();
 }
-app.UseGlobalExceptionHandler();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Erro fatal ao iniciar a aplicação");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
