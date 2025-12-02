@@ -11,12 +11,22 @@ public class User : BaseEntity
     public Role Role { get; private set; }
     public bool Active { get; private set; }
 
-    public User(string username, string email, string password, string role, bool active)
+    /// <summary>
+    /// Associação com tabela Company
+    /// </summary>
+    public Guid CompanyId { get; private set; }
+    public Company Company { get; private set; }
+
+    public User(string username, string email, string password, string role, bool active, Guid companyId)
     {
         Username = username;
         Email = Email.Create(email);
         PasswordHash = password.HashPassword();
         Role = Role.Create(role);
         Active = active;
+        CompanyId = companyId;
     }
+
+    // EF CORE
+    protected User() { }
 }

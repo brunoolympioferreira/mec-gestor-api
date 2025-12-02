@@ -59,11 +59,16 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
                 v => v.ToString(),
                 v => Enum.Parse<PlanEnum>(v));
 
+
         builder.OwnsOne(c => c.Document, document =>
         {
             document.HasIndex(d => d.Value)
                 .IsUnique()
                 .HasDatabaseName("IX_Companies_Document");
         });
+
+        builder.HasMany(c => c.Users)
+            .WithOne(u => u.Company)
+            .HasForeignKey(u => u.CompanyId);
     }
 }

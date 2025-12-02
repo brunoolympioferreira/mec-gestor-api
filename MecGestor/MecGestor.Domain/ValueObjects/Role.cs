@@ -15,6 +15,9 @@ public class Role : IEquatable<Role>
         { RoleEnum.Employee, "Acesso para funcionários" }
     };
 
+    //EF Core
+    private Role() { }
+
     private Role(RoleEnum role)
     {
         Value = role;

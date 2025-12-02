@@ -13,6 +13,8 @@ public class Company : BaseEntity
         Phone = phone;
         Active = active;
         Plan = plan;
+
+        Users = [];
     }
 
     /// <summary>
@@ -26,4 +28,5 @@ public class Company : BaseEntity
     public string Phone { get; private set; }
     public bool Active { get; private set; }
     public PlanEnum Plan { get; private set; }
+    public ICollection<User> Users { get; private set; }
 }

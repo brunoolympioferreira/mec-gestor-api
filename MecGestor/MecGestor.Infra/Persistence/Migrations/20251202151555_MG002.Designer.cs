@@ -4,6 +4,7 @@ using MecGestor.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecGestor.Infra.Persistence.Migrations
 {
     [DbContext(typeof(MecGestorDbContext))]
-    partial class MecGestorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251202151555_MG002")]
+    partial class MG002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
