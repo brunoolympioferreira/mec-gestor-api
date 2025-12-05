@@ -7,15 +7,18 @@ public class UnityOfWork : IUnityOfWork
 {
     private readonly MecGestorDbContext _context;
 
-    private ICompanyRepositroy _companyRepository;
-
-    public UnityOfWork(MecGestorDbContext context, ICompanyRepositroy companyRepositroy)
+    public UnityOfWork(
+        MecGestorDbContext context,
+        ICompanyRepositroy companyRepositroy,
+        IUserRepository userRepository)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
-        _companyRepository = companyRepositroy;
+        Companies = companyRepositroy;
+        Users = userRepository;
     }
 
-    public ICompanyRepositroy Companies => _companyRepository;
+    public ICompanyRepositroy Companies { get; }
+    public IUserRepository Users { get; }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
