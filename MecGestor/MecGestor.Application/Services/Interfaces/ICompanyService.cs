@@ -1,4 +1,4 @@
-﻿using MecGestor.Application.Common.Requests;
+﻿using MecGestor.Application.Models.Requests;
 
 namespace MecGestor.Application.Services.Interfaces;
 

@@ -1,5 +1,5 @@
-﻿using MecGestor.Application.Common.Requests;
-using MecGestor.Application.Common.Responses;
+﻿using MecGestor.Application.Models.Requests;
+using MecGestor.Application.Models.Responses;
 using MecGestor.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

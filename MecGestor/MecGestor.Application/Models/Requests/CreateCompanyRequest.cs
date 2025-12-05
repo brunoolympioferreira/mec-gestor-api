@@ -1,7 +1,7 @@
 ﻿using MecGestor.Domain.Entities;
 using MecGestor.Domain.Enums;
 
-namespace MecGestor.Application.Common.Requests;
+namespace MecGestor.Application.Models.Requests;
 
 public record CreateCompanyRequest(
     string Name, 

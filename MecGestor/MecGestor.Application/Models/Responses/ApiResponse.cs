@@ -1,4 +1,4 @@
-﻿namespace MecGestor.Application.Common.Responses;
+﻿namespace MecGestor.Application.Models.Responses;
 
 public class ApiResponse<T>
 {

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MecGestor.Application.Common.Requests;
+using MecGestor.Application.Models.Requests;
 using MecGestor.Domain.Enums;
 
 namespace MecGestor.Application.Validations.Company;

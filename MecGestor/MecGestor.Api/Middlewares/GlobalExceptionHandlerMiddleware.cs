@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MecGestor.Application.Common.Responses;
+using MecGestor.Application.Models.Responses;
 using System.Net;
 using System.Text.Json;
 
