@@ -27,11 +27,19 @@ public class GlobalExceptionHandlerMiddleware
         {
             await _next(context);
         }
-        catch (ValidationException validationEx)
+        catch (Exception ex)
         {
-            _logger.LogWarning("Erro de validação: {Errors}",
-                string.Join(", ", validationEx.Errors.Select(e => e.ErrorMessage)));
-            await HandleExceptionAsync(context, validationEx);
+            if (ex is ValidationException validationEx)
+            {
+                _logger.LogWarning("Erro de validação: {Errors}",
+                    string.Join(", ", validationEx.Errors.Select(e => e.ErrorMessage)));
+            }
+            else
+            {
+                _logger.LogError(ex, "Erro não tratado: {Message}", ex.Message);
+            }
+
+            await HandleExceptionAsync(context, ex);
         }
     }
 
