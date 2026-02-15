@@ -1,5 +1,7 @@
 ﻿using MecGestor.Domain.Intefaces.Contracts;
+using MecGestor.Domain.Intefaces.Events;
 using MecGestor.Domain.Intefaces.Repositories;
+using MecGestor.Infra.Events;
 using MecGestor.Infra.Persistence;
 using MecGestor.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,8 @@ public static class InfraModule
         services
             .AddDatabase(connectionString)
             .AddUnityOfWork()
-            .AddRepositories();
+            .AddRepositories()
+            .AddEventDispatcher();
     }
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
@@ -40,5 +43,10 @@ public static class InfraModule
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
+    }
+
+    private static IServiceCollection AddEventDispatcher(this IServiceCollection services)
+    {
+        return services.AddScoped<IEventDispatcher, EventDispatcher>();
     }
 }

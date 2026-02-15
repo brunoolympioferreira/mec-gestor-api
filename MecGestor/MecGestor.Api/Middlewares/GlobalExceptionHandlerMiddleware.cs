@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MecGestor.Application.Models.Responses;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 
@@ -29,17 +30,25 @@ public class GlobalExceptionHandlerMiddleware
         }
         catch (Exception ex)
         {
+            // Primeiro checa se é ValidationException (usando a exceção original)
             if (ex is ValidationException validationEx)
             {
                 _logger.LogWarning("Erro de validação: {Errors}",
                     string.Join(", ", validationEx.Errors.Select(e => e.ErrorMessage)));
+
+                await HandleExceptionAsync(context, ex);
             }
             else
             {
-                _logger.LogError(ex, "Erro não tratado: {Message}", ex.Message);
-            }
+                // Se não for ValidationException, aí sim desembrulha DbUpdateException
+                var exceptionToHandle = ex is DbUpdateException dbEx && dbEx.InnerException != null
+                    ? dbEx.InnerException
+                    : ex;
 
-            await HandleExceptionAsync(context, ex);
+                _logger.LogError(ex, "Erro não tratado: {Message}", exceptionToHandle.Message);
+
+                await HandleExceptionAsync(context, exceptionToHandle);
+            }
         }
     }
 
