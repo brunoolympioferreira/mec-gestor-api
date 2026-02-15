@@ -1,4 +1,5 @@
 ﻿using MecGestor.Application.EventHandlers;
+using MecGestor.Application.Services.Authentication;
 using MecGestor.Application.Services.Company;
 using MecGestor.Application.Services.Interfaces;
 using MecGestor.Application.Services.User;
@@ -21,7 +22,8 @@ public static class ApplicationModule
     {
         services
             .AddScoped<ICompanyService, CompanyService>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IAuthService, AuthService>();
 
         return services;
     }
