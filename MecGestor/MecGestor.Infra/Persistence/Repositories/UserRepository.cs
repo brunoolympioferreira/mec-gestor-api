@@ -10,4 +10,11 @@ public class UserRepository(MecGestorDbContext dbContext) : Repository<User>(dbC
     {
         return await _dbSet.AnyAsync(e => e.Username.Trim() == username.Trim() && e.CompanyId == companyId);
     }
+
+    public async Task<User> GetByEmailAndPassword(string email, string password, Guid companyId)
+    {
+        var user = await _dbSet.SingleOrDefaultAsync(e => e.Email.Address == email && e.PasswordHash == password && e.CompanyId == companyId);
+
+        return user;
+    }
 }

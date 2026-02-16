@@ -27,10 +27,11 @@ public class User : BaseEntity
         CompanyId = companyId;
     }
 
-    public User(string email, string password)
+    public User(string email, string password, Guid companyId)
     {
         Email = Email.Create(email);
         PasswordHash= password.HashPassword();
+        CompanyId = companyId;
     }
 
     // EF CORE
