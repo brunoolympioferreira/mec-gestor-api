@@ -27,6 +27,12 @@ public class User : BaseEntity
         CompanyId = companyId;
     }
 
+    public User(string email, string password)
+    {
+        Email = Email.Create(email);
+        PasswordHash= password.HashPassword();
+    }
+
     // EF CORE
     protected User() { }
 }

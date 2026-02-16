@@ -23,7 +23,8 @@ public static class ApplicationModule
         services
             .AddScoped<ICompanyService, CompanyService>()
             .AddScoped<IUserService, UserService>()
-            .AddScoped<IAuthService, AuthService>();
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<ILoginService, LoginService>();
 
         return services;
     }
