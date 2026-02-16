@@ -4,9 +4,12 @@ using MecGestor.Api.Middlewares;
 using MecGestor.Application;
 using MecGestor.Application.Validations.Company;
 using MecGestor.Infra;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
+using System.Text;
 
 try
 {
@@ -40,6 +43,29 @@ try
     builder.Services.AddInfraModule(builder.Configuration);
     builder.Services.AddApplicationModule();
 
+    var issuer = Environment.GetEnvironmentVariable("MEC_GESTOR_ISSUER");
+    var audience = Environment.GetEnvironmentVariable("MEC_GESTOR_AUDIENCE");
+    var key = Environment.GetEnvironmentVariable("MEC_GESTOR_KEY");
+
+    // JWT Authentication
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+        });
+
+
     var app = builder.Build();
 
     if (app.Environment.IsDevelopment())
@@ -55,6 +81,7 @@ try
 
     app.UseGlobalExceptionHandler();
     app.UseHttpsRedirection();
+    app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
 

@@ -10,9 +10,9 @@ public class AuthService : IAuthService
 {
     public string GenerateJwtToken(Domain.Entities.User user)
     {
-        var issuer = Environment.GetEnvironmentVariable("mec-gestor-issuer");
-        var audience = Environment.GetEnvironmentVariable("mec-gestor_audience");
-        var key = Environment.GetEnvironmentVariable("mec-gestor_key");
+        var issuer = Environment.GetEnvironmentVariable("MEC_GESTOR_ISSUER");
+        var audience = Environment.GetEnvironmentVariable("MEC_GESTOR_AUDIENCE");
+        var key = Environment.GetEnvironmentVariable("MEC_GESTOR_KEY");
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

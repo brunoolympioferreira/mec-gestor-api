@@ -5,6 +5,9 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DatabaseConnection=Server=sqlserver;Database=MecGestorDb;User Id=sa;Password=${SQL_SA_PASSWORD};Encrypt=False;TrustServerCertificate=True
+      - MEC_GESTOR_ISSUER=${MEC_GESTOR_ISSUER}
+      - MEC_GESTOR_AUDIENCE=${MEC_GESTOR_AUDIENCE}
+      - MEC_GESTOR_KEY=${MEC_GESTOR_KEY}
     ports:
       - "6000:8080"
       - "6060:8081"
