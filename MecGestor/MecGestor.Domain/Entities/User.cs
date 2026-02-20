@@ -1,5 +1,6 @@
 ﻿using MecGestor.Domain.Extensions;
 using MecGestor.Domain.ValueObjects;
+using System.Net.NetworkInformation;
 
 namespace MecGestor.Domain.Entities;
 
@@ -27,13 +28,27 @@ public class User : BaseEntity
         CompanyId = companyId;
     }
 
-    public User(string email, string password, Guid companyId)
+    public User(string email, string password)
     {
         Email = Email.Create(email);
         PasswordHash= password.HashPassword();
-        CompanyId = companyId;
     }
 
     // EF CORE
     protected User() { }
+
+    /// <summary>
+    /// Atualiza o hash da senha se o workFactor mudou
+    /// </summary>
+    /// <param name="plainPassword">Senha em texto puro para gerar novo hash</param>
+    /// <param name="workFactor">WorkFactor atual esperado</param>
+    /// <returns>True se o hash foi atualizado</returns>
+    public bool RehashPasswordIfNeeded(string plainPassword, int workFactor = 12)
+    {
+        if (!PasswordHash.NeedsRehash(workFactor))
+            return false;
+
+        PasswordHash = plainPassword.HashPassword();
+        return true;
+    }
 }

@@ -5,5 +5,5 @@ namespace MecGestor.Application.Services.Interfaces;
 
 public interface ILoginService
 {
-    Task<ApiResponse<LoginResponse>> Login(LoginRequest model);
+    Task<ApiResponse<LoginResponse>> LoginAsync(LoginRequest model, CancellationToken cancellationToken = default);
 }
